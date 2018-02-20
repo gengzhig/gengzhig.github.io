@@ -1,11 +1,212 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      h1{font-size:10px}
-    </style>
-  </head>
-<body>
-<h1>这是我使用github pages搭建的个人站点。</h1>
-</body>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/yuanjiao.css" />
+	</head>
+	<body>
+		<div id="nav">
+			<a href="#" id="navl">机智学习网</a>
+			<div id="navmeg">
+				<a href="#">基本版</a><span>|</span>
+				<a href="#">English</a><span>|</span>
+				<a href="#">手机版</a><span>|</span>
+				<a href="#" id="navr"> 企业邮箱</a>
+			</div>
+		</div>
+		 <div id="content">
+		 	<div id="left">
+		 		<h1>机智学习网</h1>
+		 		<div>
+		 			<div id="left1">
+		 				<canvas id="clock" width="300px" height="300px" ></canvas>
+		 			</div>
+		 			<div id="right1">
+		 				<div id="tupian">
+		 			      <img src="../img/1.jpg">
+		 		        </div>
+		 			</div>
+		 		</div>
+		 	</div>
+		 	<div id="right">
+		 		<form class="denglu">
+			<div class="header">
+				<a href="">快速登录</a>
+				<a href="">账号密码登录</a>
+			</div>
+			<hr />
+			<div class="container">
+				<label>
+					<input type="text" id="i1" placeholder="支持QQ号/手机号/邮箱登陆"  value=""/>
+				</label>
+				<br />
+				<input type="password" id="i2" placeholder="QQ密码" />
+			</div>
+			<div class="middle">
+				<input type="checkbox" />
+				<p id="jizhi">下次自动登录</p>
+			</div>
+			<button id="but"><p>登录</p></button>
+			<div class="bottom">
+				<a href="">忘了密码？</a><span>|</span>
+				<a href="" id="boa2">注册新账号</a><span>|</span>
+				<a href="" id="boa3">意见反馈</a>
+			</div>
+		</form>
+		 	</div>
+		</div>
+		<div id="footer">
+			<div id="fot1">
+				<a href="#">关于机智</a><span>|</span>
+				<a href="#">服务条款</a><span>|</span>
+				<a href="#">客服中心</a><span>|</span>
+				<a href="#">联系我们</a><span>|</span>
+				<a href="#">帮助中心</a><span>|</span>
+				<p>©1998 - 2017 Tencent Inc. All Rights Reserved.</p>
+			</div>
+			
+		</div>
+	</body>
+    <script type="text/javascript">
+    	var BUT=document.getElementById("but");
+        var jizhi=document.getElementById("jizhi");
+        var tup=document.getElementById("tupian");
+        var img=tup.getElementsByTagName("img");
+        var pi={pic:["../img/1.jpg","../img/3.jpg"]}	
+    	var	str={msg:["登录成功","登录失败","您还没有输入账号"]};
+    	var pw=document.getElementById("pwn");
+    	window.onload=function(){ 
+    	setInterval(fntime,1000);
+		fntime();
+        function fntime(){
+        var myTime=new Date();
+		var Year=myTime.getFullYear();
+		var Month=myTime.getMonth()+1;
+		var Dates=myTime.getDate();
+		var Day=myTime.getDay();
+		var Hours=myTime.getHours();
+		var Minutes=myTime.getMinutes();
+		var Seconds=myTime.getSeconds();
+		if(Day==0) Day="星期天";
+		if(Day==1) Day="星期一";
+		if(Day==2) Day="星期二";
+		if(Day==3) Day="星期三";
+		if(Day==4) Day="星期四";
+		if(Day==5) Day="星期五";
+		if(Day==6) Day="星期六";
+		var st=Year+"年"+Month+"月"+Dates+"日"+" "+
+			Day+" "+fntime2(Hours)+":"+fntime2(Minutes)+":"+fntime2(Seconds);
+		pw.innerHTML=st;	
+            }
+         function fntime2(n){
+         	if(n<10)return "0"+n;
+         	else return ""+n;
+         }
+		
+    	};
+    	var col=document.getElementById("clock");
+	     var ctx=col.getContext("2d");
+	     var width=ctx.canvas.width;
+	     var height=ctx.canvas.height;
+	     var r=width/2;
+	     //画表
+	     function drawclock(){
+	     	ctx.save();
+	     	ctx.lineWidth=10;
+	     	ctx.translate(r,r);
+	     	ctx.beginPath();
+	     	ctx.arc(0,0,r-5,0,2*Math.PI,false );
+	     	ctx.stroke();
+	     	
+	     	var hoursnumber=[3,4,5,6,7,8,9,10,11,12,1,2];
+	     	ctx.font="12px  Arial";
+	     	ctx.textAlign="center";
+	     	ctx.textBaseline="middle";
+	     	hoursnumber.forEach(function(number,i){//遍历12个点
+	     		var rad=2*Math.PI/12*i;
+	     		var x=Math.cos(rad)*(r-30);
+	     		var y=Math.sin(rad)*(r-30);
+	     		ctx.fillText(number,x,y);
+	     	})
+	     	//表得点
+	     	for (i=0;i<60;i++) {//遍历分钟点
+	     		var rad=2*Math.PI/60*i;
+	     		var x=Math.cos(rad)*(r-18);
+	     		var y=Math.sin(rad)*(r-18);
+	     		ctx.beginPath();
+	     		if(i%5===0){
+	     			ctx.fillStyle="#000";
+	     			ctx.arc(x,y,2,0,2*Math.PI,false );
+	     		}else{
+	     			ctx.fillStyle="#ccc";
+	     			ctx.arc(x,y,2,0,2*Math.PI,false );
+	     		}
+	     		
+	     		ctx.fill();
+	     	}
+	     }
+	     function drawhour(hour,minute){
+	     	ctx.save();
+	     	ctx.beginPath();
+	     	var rad=2*Math.PI/12*hour;
+	     	var mrad=2*Math.PI/12/60*minute;
+	     	ctx.rotate(rad+mrad);
+	     	ctx.lineWidth=6;
+	     	ctx.lineCap="round";
+	     	ctx.moveTo(0,10);
+	     	ctx.lineTo(0,-r/2);
+	     	ctx.stroke();
+	     	ctx.restore();
+	     }
+	     function drawminute(minute){
+	     	ctx.save();
+	     	ctx.beginPath();
+	     	var rad=2*Math.PI/60*minute;
+	     	ctx.rotate(rad);
+	     	ctx.lineWidth=5;
+	     	ctx.lineCap="round";
+	     	ctx.moveTo(0,10);
+	     	ctx.lineTo(0,-r+50);
+	     	ctx.stroke();
+	     	ctx.restore();
+	     }
+	     function drawsecond(second){
+	     	ctx.save();
+	     	ctx.beginPath();
+	     	ctx.fillStyle="#FF0000";
+	     	var rad=2*Math.PI/60*second;
+	     	ctx.rotate(rad);
+	     	
+	     	ctx.moveTo(-2,20);
+	     	ctx.lineTo(2,20);
+	     	ctx.lineTo(1,-r+18);
+	     	ctx.lineTo(-1,-r+18);
+	     	ctx.fill();
+	     	ctx.restore();
+	     }
+	     function drawdot(){
+	     	ctx.beginPath();
+	     	ctx.fillStyle="#fff";
+	     	ctx.arc(0,0,3,0,2*Math.PI,false );
+	     	ctx.fill();
+	     }
+	     function draw(){
+	     	ctx.clearRect(0,0,width,height );
+			    var now=new Date();
+			    var hour=now.getHours();
+			    var minute=now.getMinutes();
+			    var second=now.getSeconds();
+			    drawclock();
+			     drawhour(hour,minute);
+			     drawminute(minute);
+			     drawsecond(second);
+			      drawdot();
+			   ctx.restore();
+	     }
+	     draw();
+	     
+	     setInterval(draw,1000);
+    </script>
 </html>
